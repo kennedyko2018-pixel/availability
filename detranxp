@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DETRAN XP — Retaguarda • K-Pixel Lab</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans (geométrica, limpa e pesada) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#FF6B00',
+              hover: '#FF7F24',
+              active: '#E05E00',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ==========================================================================
+       IDENTIDADE VISUAL K-PIXEL LAB (DARK & LIGHT MODE)
+       ========================================================================== */
+    :root {
+      --brand: #FF6B00;
+      --brand-hover: #FF7F24;
+      --brand-glow: rgba(255, 107, 0, 0.34);
+      --brand-soft: rgba(255, 107, 0, 0.14);
+      --brand-border: rgba(255, 107, 0, 0.38);
+
+      /* Dark Mode (Padrão) */
+      --bg-page: #121212;
+      --bg-dots: rgba(255, 255, 255, 0.05);
+      --bg-card: #1E1E1E;
+      --bg-subcard: #262626;
+      --bg-subcard-hover: #2E2E2E;
+      --border-subtle: #2C2C2C;
+      --text-primary: #F8F9FA;
+      --text-secondary: #A1A1AA;
+      --text-muted: #71717A;
+      --shadow-card: 0 14px 36px rgba(0, 0, 0, 0.48), 0 2px 6px rgba(0, 0, 0, 0.28);
+      --shadow-btn: 0 6px 18px rgba(255, 107, 0, 0.28);
+      --input-scheme: dark;
+    }
+
+    html[data-theme="light"] {
+      /* Light Mode */
+      --bg-page: #F8F9FA;
+      --bg-dots: rgba(0, 0, 0, 0.04);
+      --bg-card: #FFFFFF;
+      --bg-subcard: #F3F4F6;
+      --bg-subcard-hover: #E9ECEF;
+      --border-subtle: rgba(0, 0, 0, 0.08);
+      --text-primary: #111827;
+      --text-secondary: #4B5563;
+      --text-muted: #6B7280;
+      --shadow-card: 0 12px 32px rgba(17, 24, 39, 0.07), 0 2px 6px rgba(17, 24, 39, 0.04);
+      --shadow-btn: 0 6px 18px rgba(255, 107, 0, 0.22);
+      --input-scheme: light;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', Inter, system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-page);
+      background-image: radial-gradient(var(--bg-dots) 1.5px, transparent 1.5px);
+      background-size: 20px 20px;
+      color: var(--text-primary);
+      min-height: 100vh;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      overflow-x: hidden;
+    }
+
+    .tabular {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Cards K-Pixel Lab */
+    .kp-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 22px;
+      box-shadow: var(--shadow-card);
+      transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.18s ease;
+    }
+
+    .kp-subcard {
+      background-color: var(--bg-subcard);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .kp-process-card:hover {
+      border-color: var(--brand-border);
+      transform: translateY(-2px);
+    }
+
+    /* Botões Táteis */
+    .btn-primary {
+      background: linear-gradient(180deg, #FF7A1A 0%, #FF6B00 100%);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 14px;
+      box-shadow: var(--shadow-btn);
+      transition: transform 0.12s cubic-bezier(0.22, 1, 0.36, 1), filter 0.15s ease, box-shadow 0.15s ease;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      filter: brightness(1.06);
+      box-shadow: 0 8px 22px var(--brand-glow);
+    }
+    .btn-primary:active {
+      transform: scale(0.95);
+      filter: brightness(0.96);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-subcard);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      transition: transform 0.12s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.15s ease, border-color 0.15s ease;
+      cursor: pointer;
+    }
+    .btn-secondary:hover {
+      background-color: var(--bg-subcard-hover);
+      border-color: var(--brand-border);
+    }
+    .btn-secondary:active {
+      transform: scale(0.95);
+    }
+
+    .btn-icon {
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.12s ease, border-color 0.15s ease, background-color 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-icon:hover {
+      border-color: var(--brand-border);
+      transform: translateY(-1px);
+    }
+    .btn-icon:active {
+      transform: scale(0.95);
+    }
+
+    /* Chips de Serviço Digitado */
+    .service-chip {
+      background-color: var(--bg-subcard);
+      color: var(--text-secondary);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 12px;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .service-chip:hover {
+      border-color: var(--brand-border);
+      color: var(--text-primary);
+    }
+    .service-chip.active {
+      background-color: var(--brand-soft);
+      color: var(--brand);
+      border-color: var(--brand);
+      box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.16);
+    }
+
+    /* Input estilizado */
+    .kp-input {
+      background-color: var(--bg-subcard);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      color-scheme: var(--input-scheme);
+      transition: border-color 0.2s ease;
+    }
+    .kp-input:focus {
+      outline: none;
+      border-color: var(--brand);
+    }
+
+    /* Animação Pop do Placar */
+    @keyframes scorePop {
+      0% { transform: scale(1); }
+      35% { transform: scale(1.1); color: #FF8A33; }
+      100% { transform: scale(1); }
+    }
+    .animate-pop {
+      animation: scorePop 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Animação Flutuante */
+    @keyframes floatXp {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(0.85);
+      }
+      25% {
+        opacity: 1;
+        transform: translate(-50%, -22px) scale(1.12);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -70px) scale(0.95);
+      }
+    }
+    .floating-xp {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-weight: 900;
+      font-size: 1.15rem;
+      color: #FF6B00;
+      text-shadow: 0 4px 14px rgba(255, 107, 0, 0.45);
+      animation: floatXp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      user-select: none;
+      text-align: center;
+      line-height: 1.15;
+    }
+
+    /* Barra de Progresso da Meta */
+    .goal-bar-fill {
+      background: linear-gradient(90deg, #FF6B00 0%, #FF9447 100%);
+      box-shadow: 0 0 14px rgba(255, 107, 0, 0.45);
+      transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .goal-card-achieved {
+      border-color: var(--brand) !important;
+      box-shadow: 0 0 0 1px var(--brand-border), 0 16px 40px rgba(255, 107, 0, 0.22) !important;
+    }
+
+    /* Toast discreto */
+    .kp-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(90px);
+      opacity: 0;
+      pointer-events: none;
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--brand-border);
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      padding: 12px 18px;
+      z-index: 9998;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+    }
+    .kp-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Modal Comemorativo QUEM FEZ, FEZ!!! */
+    @keyframes modalBounce {
+      0% { opacity: 0; transform: scale(0.75) translateY(20px); }
+      60% { opacity: 1; transform: scale(1.04) translateY(-4px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .celebration-card {
+      animation: modalBounce 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Scrollbar discreta */
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: var(--border-subtle);
+      border-radius: 999px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: var(--brand);
+    }
+
+    .today-row {
+      background-color: var(--brand-soft);
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-brand selection:text-white">
+
+  <!-- Canvas Fullscreen para Explosão de Confetes -->
+  <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-[10001] hidden"></canvas>
+
+  <!-- Modal Comemorativo de Meta Batida -->
+  <div
+    id="celebrationModal"
+    class="fixed inset-0 z-[10000] hidden items-center justify-center p-4 bg-black/75 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="celebrationTitle"
+  >
+    <div class="celebration-card kp-card max-w-md w-full p-7 sm:p-8 text-center relative overflow-hidden border-2 border-brand shadow-[0_24px_70px_rgba(255,107,0,0.4)]">
+      <div class="pointer-events-none absolute -top-20 -left-20 w-52 h-52 rounded-full opacity-25 blur-3xl bg-brand"></div>
+      <div class="pointer-events-none absolute -bottom-20 -right-20 w-52 h-52 rounded-full opacity-25 blur-3xl bg-brand"></div>
+
+      <div class="relative z-10">
+        <div class="text-5xl sm:text-6xl mb-3 select-none tracking-wide">
+          🍾🥂👏🎉
+        </div>
+        <div
+          class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest mb-3"
+          style="background: var(--brand-soft); color: var(--brand); border: 1px solid var(--brand-border);"
+        >
+          🏆 Meta da Retaguarda Batida!
+        </div>
+        <h2 id="celebrationTitle" class="text-3xl sm:text-4xl font-black tracking-tight text-brand leading-tight">
+          QUEM FEZ, FEZ!!!
+        </h2>
+        <p id="celebrationSubtitle" class="text-sm sm:text-base font-bold mt-3 leading-relaxed" style="color: var(--text-primary);">
+          Você bateu a meta diária de processos conferidos na Retaguarda! Mandou muito bem! 👏🎉
+        </p>
+        <p class="text-xs font-semibold mt-2" style="color: var(--text-secondary);">
+          Continue nesse ritmo ou celebre a missão cumprida hoje! 🥂
+        </p>
+
+        <button
+          id="closeCelebrationBtn"
+          type="button"
+          class="btn-primary w-full mt-6 py-3.5 px-6 text-sm sm:text-base font-black uppercase tracking-wide"
+        >
+          Bora pra cima! 🚀
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       CABEÇALHO
+       ======================================================================== -->
+  <header class="max-w-6xl mx-auto px-4 sm:px-6 pt-6 pb-4">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <!-- Marca K-Pixel Lab / DETRAN XP -->
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-2xl bg-brand text-white flex items-center justify-center font-black text-xl tracking-tight shadow-[0_8px_22px_rgba(255,107,0,0.4)] select-none shrink-0">
+          XP
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl sm:text-2xl font-black tracking-tight leading-none">
+              DETRAN <span class="text-brand">XP</span>
+            </h1>
+            <span
+              class="px-2 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-wider"
+              style="background: var(--brand-soft); color: var(--brand); border: 1px solid var(--brand-border);"
+            >
+              Retaguarda
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium mt-1" style="color: var(--text-secondary);">
+            Central de Processos da Retaguarda &bull; K-Pixel Lab
+          </p>
+        </div>
+      </div>
+
+      <!-- Controles da Direita: Data, Som e Tema -->
+      <div class="flex items-center justify-between sm:justify-end gap-2.5 flex-wrap">
+        <div
+          id="todayDateBadge"
+          class="kp-card !rounded-2xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold capitalize flex items-center gap-2"
+          style="color: var(--text-secondary); box-shadow: none;"
+        >
+          <svg class="w-4 h-4 text-brand shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="18" rx="4" />
+            <path d="M16 2v4M8 2v4M3 10h18" />
+          </svg>
+          <span id="todayLabel">Carregando...</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Botão Som -->
+          <button
+            id="soundToggle"
+            type="button"
+            class="btn-icon w-11 h-11 flex items-center justify-center"
+            title="Ligar/Desligar efeitos sonoros"
+            aria-label="Alternar efeitos sonoros"
+          ></button>
+
+          <!-- Botão Tema Claro/Escuro -->
+          <button
+            id="themeToggle"
+            type="button"
+            class="btn-icon w-11 h-11 flex items-center justify-center"
+            title="Alternar tema Claro/Escuro"
+            aria-label="Alternar tema Claro ou Escuro"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       CONTEÚDO PRINCIPAL
+       ======================================================================== -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 pb-12 space-y-6">
+
+    <!-- HERO: Pontuação de Hoje + Barra de Meta de Conferidos + Mini-Cards 2x2 -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5">
+      <!-- Card Principal de Pontuação e Meta -->
+      <div id="heroScoreCard" class="kp-card p-6 sm:p-7 lg:col-span-7 flex flex-col justify-between relative overflow-hidden">
+        <div
+          class="pointer-events-none absolute -top-16 -right-16 w-48 h-48 rounded-full opacity-20 blur-3xl"
+          style="background: #FF6B00;"
+        ></div>
+
+        <div class="relative z-10">
+          <div class="flex items-center justify-between gap-3 flex-wrap">
+            <span class="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-brand">
+              <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+              Pontuação de Hoje
+            </span>
+            <span
+              id="goalStatusBadge"
+              class="px-3 py-1 rounded-full text-xs font-extrabold tracking-wide"
+              style="background: var(--bg-subcard); color: var(--text-secondary); border: 1px solid var(--border-subtle);"
+            >
+              Retaguarda em ação
+            </span>
+          </div>
+
+          <div class="mt-3 flex items-baseline gap-2.5">
+            <div id="todayScore" class="text-6xl sm:text-7xl font-black tracking-tighter leading-none tabular">
+              0
+            </div>
+            <span class="text-xl sm:text-2xl font-extrabold text-brand">XP</span>
+          </div>
+        </div>
+
+        <!-- Barra de Meta Diária de Processos Conferidos -->
+        <div class="mt-6 relative z-10">
+          <div class="flex items-center justify-between gap-2 flex-wrap text-xs font-bold mb-2">
+            <span id="goalProgressText" class="tabular" style="color: var(--text-secondary);">
+              0 / 30 processos conferidos hoje
+            </span>
+
+            <!-- Controle de Edição Inline da Meta -->
+            <div class="flex items-center gap-2">
+              <div id="goalEditBox" class="hidden items-center gap-1.5">
+                <input
+                  type="number"
+                  id="goalInput"
+                  min="1"
+                  max="999"
+                  class="kp-input w-16 px-2 py-1 text-xs font-black text-center tabular"
+                  aria-label="Nova meta diária de processos conferidos"
+                />
+                <button
+                  id="saveGoalBtn"
+                  type="button"
+                  class="btn-primary px-2.5 py-1 text-[11px] font-black !rounded-lg"
+                >
+                  Salvar
+                </button>
+                <button
+                  id="cancelGoalBtn"
+                  type="button"
+                  class="btn-secondary px-2 py-1 text-[11px] font-bold !rounded-lg"
+                >
+                  ✕
+                </button>
+              </div>
+              <button
+                id="editGoalBtn"
+                type="button"
+                class="text-xs font-extrabold text-brand hover:underline cursor-pointer"
+              >
+                Editar meta
+              </button>
+            </div>
+          </div>
+
+          <div class="w-full h-3.5 rounded-full overflow-hidden p-0.5" style="background-color: var(--bg-subcard); border: 1px solid var(--border-subtle);">
+            <div id="goalBarFill" class="goal-bar-fill h-full rounded-full" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grade 2x2 de Estatísticas Rápidas -->
+      <div class="lg:col-span-5 grid grid-cols-2 gap-3.5 sm:gap-4">
+        <div class="kp-card p-5 flex flex-col justify-between">
+          <span class="text-xs font-bold uppercase tracking-wider" style="color: var(--text-muted);">Conferidos Hoje</span>
+          <strong id="todayConferidos" class="text-3xl sm:text-4xl font-black tabular mt-2 leading-none text-brand">0</strong>
+          <span class="text-xs font-medium mt-2" style="color: var(--text-secondary);">contam na meta</span>
+        </div>
+
+        <div class="kp-card p-5 flex flex-col justify-between">
+          <span class="text-xs font-bold uppercase tracking-wider" style="color: var(--text-muted);">Digitados Hoje</span>
+          <strong id="todayDigitados" class="text-3xl sm:text-4xl font-black tabular mt-2 leading-none">0</strong>
+          <span class="text-xs font-medium mt-2" style="color: var(--text-secondary);">somam apenas XP</span>
+        </div>
+
+        <div class="kp-card p-5 flex flex-col justify-between">
+          <span class="text-xs font-bold uppercase tracking-wider" style="color: var(--text-muted);">Devolvidos Hoje</span>
+          <strong id="todayDevolvidos" class="text-3xl sm:text-4xl font-black tabular mt-2 leading-none">0</strong>
+          <span class="text-xs font-medium mt-2" style="color: var(--text-secondary);">sem pontuação</span>
+        </div>
+
+        <div class="kp-card p-5 flex flex-col justify-between">
+          <span class="text-xs font-bold uppercase tracking-wider" style="color: var(--text-muted);">XP no Mês</span>
+          <strong id="monthScore" class="text-3xl sm:text-4xl font-black tabular mt-2 leading-none">0</strong>
+          <span id="currentMonthName" class="text-xs font-medium mt-2 capitalize" style="color: var(--text-secondary);">mês atual</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         CARDS DE REGISTRO RÁPIDO — CONFERÊNCIA DE PROCESSOS
+         ====================================================================== -->
+    <section class="space-y-4">
+      <div class="px-1">
+        <h2 class="text-lg sm:text-xl font-black tracking-tight">Conferência de Processos</h2>
+        <p class="text-xs sm:text-sm font-medium mt-0.5" style="color: var(--text-secondary);">
+          Cada processo conferido na Retaguarda soma <strong class="text-brand">+1 na meta diária</strong> e seus respectivos pontos de XP.
+        </p>
+      </div>
+
+      <!-- Grade dos 5 Tipos de Conferência -->
+      <div id="conferenciaGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4"></div>
+
+      <!-- Linha Especial: Processo Digitado (Apenas XP) + Processo Devolvido (0 XP) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 pt-1">
+        <!-- Card Processo Digitado -->
+        <article class="kp-card kp-process-card p-5 sm:p-6 lg:col-span-8 flex flex-col justify-between gap-4">
+          <div>
+            <div class="flex items-start justify-between gap-3 flex-wrap">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+                  style="background: var(--brand-soft); color: var(--brand);"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
+                    <rect x="2" y="5" width="20" height="14" rx="3" />
+                    <path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 13h.01M18 13h.01M10 13h4" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-base sm:text-lg font-black tracking-tight leading-snug">
+                    Processo Digitado
+                  </h3>
+                  <p class="text-xs font-medium mt-0.5" style="color: var(--text-secondary);">
+                    Selecione o serviço digitado. Não entra na meta de conferidos.
+                  </p>
+                </div>
+              </div>
+              <span
+                class="px-2.5 py-1 rounded-xl text-[11px] font-black uppercase tracking-wider shrink-0"
+                style="background: var(--brand-soft); color: var(--brand); border: 1px solid var(--brand-border);"
+              >
+                Apenas XP
+              </span>
+            </div>
+
+            <!-- Pequenos quadrados/chips de seleção do serviço digitado -->
+            <div id="digitadoServices" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mt-4"></div>
+          </div>
+
+          <!-- Botões de Ação do Digitado -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+            <button
+              id="btnDigitadoNormal"
+              type="button"
+              class="btn-primary py-3 px-4 text-sm font-black tabular flex items-center justify-center gap-1.5"
+            >
+              <span>Registrar Digitado</span>
+              <span id="btnDigitadoNormalPts">+1 XP</span>
+            </button>
+            <button
+              id="btnDigitadoOutro"
+              type="button"
+              class="btn-secondary py-3 px-4 text-sm font-extrabold tabular flex items-center justify-center gap-1.5"
+            >
+              <span>Outro estado</span>
+              <span id="btnDigitadoOutroPts" class="text-brand font-black">+2 XP</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Card Processo Devolvido -->
+        <article class="kp-card kp-process-card p-5 sm:p-6 lg:col-span-4 flex flex-col justify-between gap-4">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <div
+                class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+                style="background: var(--bg-subcard); color: var(--text-secondary); border: 1px solid var(--border-subtle);"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
+                  <path d="M9 14L4 9l5-5" />
+                  <path d="M20 20v-7a4 4 0 0 0-4-4H4" />
+                </svg>
+              </div>
+              <span
+                class="px-2.5 py-1 rounded-xl text-[11px] font-black uppercase tracking-wider shrink-0"
+                style="background: var(--bg-subcard); color: var(--text-muted); border: 1px solid var(--border-subtle);"
+              >
+                Sem pontuação
+              </span>
+            </div>
+
+            <h3 class="text-base sm:text-lg font-black tracking-tight mt-3 leading-snug">
+              Processo Devolvido
+            </h3>
+            <p class="text-xs font-medium mt-1 leading-relaxed" style="color: var(--text-secondary);">
+              Devolvido ao despachante por pendência. Registra apenas no contador de devolvidos (0 XP).
+            </p>
+          </div>
+
+          <button
+            id="btnDevolvido"
+            type="button"
+            class="btn-secondary w-full py-3 px-4 text-sm font-black flex items-center justify-center gap-2"
+          >
+            <span>↩</span>
+            <span>Registrar Devolvido (+1)</span>
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         RANKING DIÁRIO & RESUMO MENSAL
+         ====================================================================== -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
+      <!-- Ranking Diário -->
+      <div class="kp-card p-5 sm:p-6 flex flex-col">
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <div>
+            <h2 class="text-lg font-black tracking-tight flex items-center gap-2">
+              <span>🏆</span> Ranking Diário
+            </h2>
+            <p class="text-xs font-medium mt-0.5" style="color: var(--text-secondary);">
+              Melhores dias da Retaguarda ordenados por XP. 🏆 indica meta batida.
+            </p>
+          </div>
+          <span id="totalDaysBadge" class="px-2.5 py-1 rounded-xl text-xs font-bold tabular" style="background: var(--bg-subcard); color: var(--text-secondary);">
+            0 dias
+          </span>
+        </div>
+
+        <div id="dailyRanking" class="flex-1 overflow-y-auto max-h-[400px] custom-scroll pr-1"></div>
+      </div>
+
+      <!-- Resumo do Mês -->
+      <div class="kp-card p-5 sm:p-6 flex flex-col">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div>
+            <h2 class="text-lg font-black tracking-tight flex items-center gap-2">
+              <span>📊</span> Resumo do Mês
+            </h2>
+            <p class="text-xs font-medium mt-0.5" style="color: var(--text-secondary);">
+              Produtividade consolidada da Retaguarda por período.
+            </p>
+          </div>
+          <input
+            type="month"
+            id="monthPicker"
+            class="kp-input px-3 py-2 text-xs sm:text-sm font-bold cursor-pointer"
+            aria-label="Selecionar mês"
+          />
+        </div>
+
+        <!-- Placar Grande do Mês -->
+        <div class="kp-subcard p-4 sm:p-5 mb-4 space-y-3">
+          <div class="flex items-center justify-between gap-3">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider" style="color: var(--text-muted);">Total do Período</span>
+              <div class="flex items-baseline gap-1.5 mt-1">
+                <span id="selectedMonthScore" class="text-3xl sm:text-4xl font-black text-brand tabular leading-none">0</span>
+                <span class="text-sm font-extrabold text-brand">XP</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-[11px] font-bold uppercase tracking-wider" style="color: var(--text-muted);">Dias Trabalhados</span>
+              <div id="monthStatDays" class="text-2xl font-black tabular leading-tight mt-0.5">0</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 text-center pt-1">
+            <div class="px-2 py-2 rounded-xl" style="background: var(--bg-card); border: 1px solid var(--border-subtle);">
+              <div id="monthStatConf" class="text-base sm:text-lg font-black tabular leading-tight text-brand">0</div>
+              <div class="text-[10px] font-bold uppercase mt-0.5" style="color: var(--text-muted);">Conferidos</div>
+            </div>
+            <div class="px-2 py-2 rounded-xl" style="background: var(--bg-card); border: 1px solid var(--border-subtle);">
+              <div id="monthStatDig" class="text-base sm:text-lg font-black tabular leading-tight">0</div>
+              <div class="text-[10px] font-bold uppercase mt-0.5" style="color: var(--text-muted);">Digitados</div>
+            </div>
+            <div class="px-2 py-2 rounded-xl" style="background: var(--bg-card); border: 1px solid var(--border-subtle);">
+              <div id="monthStatDev" class="text-base sm:text-lg font-black tabular leading-tight">0</div>
+              <div class="text-[10px] font-bold uppercase mt-0.5" style="color: var(--text-muted);">Devolvidos</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detalhamento por Tipo, Serviços Digitados e Dias -->
+        <div id="monthDetails" class="flex-1 overflow-y-auto max-h-[260px] custom-scroll pr-1 space-y-4"></div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         ÚLTIMOS LANÇAMENTOS & DESFAZER
+         ====================================================================== -->
+    <section class="kp-card p-5 sm:p-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <div>
+          <h2 class="text-lg font-black tracking-tight">Últimos Lançamentos</h2>
+          <p class="text-xs font-medium mt-0.5" style="color: var(--text-secondary);">
+            Registrou errado? Desfaça o último lançamento com um toque.
+          </p>
+        </div>
+
+        <button
+          id="undoBtn"
+          type="button"
+          class="btn-secondary px-4 py-2.5 text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 shrink-0"
+        >
+          <span>↶</span>
+          <span>Desfazer último</span>
+        </button>
+      </div>
+
+      <div id="historyList" class="overflow-y-auto max-h-[290px] custom-scroll pr-1"></div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="max-w-6xl mx-auto px-4 pb-8 text-center">
+    <p class="text-xs font-medium" style="color: var(--text-muted);">
+      DETRAN XP &bull; Retaguarda &bull; Identidade Visual K-Pixel Lab &bull; Dados salvos automaticamente neste navegador.
+    </p>
+  </footer>
+
+  <!-- Toast Discreto -->
+  <div id="toast" class="kp-toast flex items-center gap-2.5 text-xs sm:text-sm font-bold" role="status" aria-live="polite">
+    <span class="w-2.5 h-2.5 rounded-full bg-brand shrink-0"></span>
+    <span id="toastMsg">Ação realizada</span>
+  </div>
+
+  <!-- ========================================================================
+       LÓGICA DO APLICATIVO (JAVASCRIPT)
+       ======================================================================== -->
+  <script>
+    (() => {
+      // ======================================================================
+      // 1. CONFIGURAÇÕES E CATÁLOGOS
+      // ======================================================================
+      const STORAGE_KEY = 'detran_xp_records_v1';
+      const GOAL_KEY = 'detran_xp_daily_goal';
+      const THEME_KEY = 'detran_xp_theme_v1';
+      const SOUND_KEY = 'detran_xp_sound_v1';
+
+      // Processos de Conferência (somam +1 na meta de conferidos + XP)
+      const CONFERENCIA_TYPES = [
+        {
+          id: 'normal',
+          name: 'Processo Normal',
+          desc: 'Conferência padrão sem PJ ou procuração.',
+          points: 1,
+          icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 14l2 2 4-4"/></svg>`
+        },
+        {
+          id: 'onepj',
+          name: '1 Parte PJ ou Procuração',
+          desc: 'Uma parte CNPJ ou procuração no processo.',
+          points: 2,
+          icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h.01M9 13h.01M9 17h.01"/></svg>`
+        },
+        {
+          id: 'twopj',
+          name: '2 Partes PJ ou 2 Procurações',
+          desc: 'Ambas as partes CNPJ ou duas procurações.',
+          points: 3,
+          icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24"><path d="M2 21h20"/><path d="M4 21V6l6-3v18"/><path d="M14 21V6l6-3v18"/><path d="M7 9h.01M7 13h.01M17 9h.01M17 13h.01"/></svg>`
+        },
+        {
+          id: 'leilao',
+          name: 'Leilão',
+          desc: 'Conferência de veículo oriundo de leilão.',
+          points: 4,
+          icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24"><path d="M14.5 3.5l6 6-3 3-6-6 3-3z"/><path d="M11.5 6.5l-7 7a2.12 2.12 0 0 0 3 3l7-7"/><path d="M3 21h10"/></svg>`
+        },
+        {
+          id: 'decisao',
+          name: 'Inventário ou Judicial',
+          desc: 'Transferência por inventário ou ordem judicial.',
+          points: 5,
+          icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M5 7h14"/><path d="M5 7l-2 7h4l-2-7z"/><path d="M19 7l-2 7h4l-2-7z"/><path d="M8 21h8"/></svg>`
+        }
+      ];
+
+      // Serviços selecionáveis para Processo Digitado (Apenas XP)
+      const DIGITADO_SERVICES = [
+        { id: 'transferencia', label: 'Transferência', points: 1 },
+        { id: 'alteracao', label: 'Alteração de dados', points: 1 },
+        { id: 'primeiro_emplacamento', label: '1º Emplacamento', points: 1 },
+        { id: 'segunda_via_crv', label: '2ª Via CRV', points: 2 },
+        { id: 'baixa', label: 'Baixa', points: 2 }
+      ];
+
+      // ======================================================================
+      // 2. ESTADO DA APLICAÇÃO
+      // ======================================================================
+      let records = loadRecords();
+      let dailyGoal = loadGoal();
+      let selectedServiceId = DIGITADO_SERVICES[0].id;
+      let soundEnabled = loadPreference(SOUND_KEY, 'on') === 'on';
+      let currentTheme = loadPreference(THEME_KEY, 'dark');
+      let audioCtx = null;
+      let toastTimer = null;
+      let confettiAnimId = null;
+
+      const $ = (id) => document.getElementById(id);
+
+      // ======================================================================
+      // 3. PERSISTÊNCIA SEGURA (LOCALSTORAGE)
+      // ======================================================================
+      function loadRecords() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          const parsed = raw ? JSON.parse(raw) : [];
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (err) {
+          console.error('Erro ao ler histórico:', err);
+          return [];
+        }
+      }
+
+      function saveRecords() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+        } catch (err) {
+          console.error('Erro ao salvar histórico:', err);
+          showToast('Aviso: não foi possível salvar no navegador.');
+        }
+      }
+
+      function loadGoal() {
+        try {
+          const raw = Number(localStorage.getItem(GOAL_KEY));
+          return raw && raw >= 1 ? Math.floor(raw) : 30;
+        } catch {
+          return 30;
+        }
+      }
+
+      function saveGoal(val) {
+        dailyGoal = Math.max(1, Math.min(999, Math.floor(Number(val) || 30)));
+        try {
+          localStorage.setItem(GOAL_KEY, String(dailyGoal));
+        } catch {
+          // Ignora erro em modo privado
+        }
+      }
+
+      function loadPreference(key, fallback) {
+        try {
+          return localStorage.getItem(key) || fallback;
+        } catch {
+          return fallback;
+        }
+      }
+
+      function savePreference(key, value) {
+        try {
+          localStorage.setItem(key, value);
+        } catch {
+          // Ignora erro em modo privado
+        }
+      }
+
+      // ======================================================================
+      // 4. UTILITÁRIOS DE DATA E CLASSIFICAÇÃO
+      // ======================================================================
+      function getTodayKey() {
+        const d = new Date();
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+      }
+
+      function getCurrentMonthKey() {
+        return getTodayKey().slice(0, 7);
+      }
+
+      function formatDateBR(dateKey) {
+        const d = new Date(dateKey + 'T12:00:00');
+        return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      }
+
+      function formatMonthName(monthKey) {
+        const [y, m] = monthKey.split('-');
+        const d = new Date(Number(y), Number(m) - 1, 1);
+        return d.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+      }
+
+      function isDigitado(r) {
+        return r.type === 'digitado';
+      }
+
+      function isDevolvido(r) {
+        return r.type === 'devolvido';
+      }
+
+      function isConferido(r) {
+        return !isDigitado(r) && !isDevolvido(r);
+      }
+
+      function sumPoints(list) {
+        return list.reduce((acc, item) => acc + (Number(item.points) || 0), 0);
+      }
+
+      function countConferidos(list) {
+        return list.filter(isConferido).length;
+      }
+
+      function countDigitados(list) {
+        return list.filter(isDigitado).length;
+      }
+
+      function countDevolvidos(list) {
+        return list.filter(isDevolvido).length;
+      }
+
+      // ======================================================================
+      // 5. EFEITOS SONOROS (WEB AUDIO API)
+      // ======================================================================
+      function playSound(mode = 'score') {
+        if (!soundEnabled) return;
+        try {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (!AudioContextClass) return;
+          if (!audioCtx) audioCtx = new AudioContextClass();
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+
+          const now = audioCtx.currentTime;
+
+          if (mode === 'celebration') {
+            // Fanfarra animada de meta batida
+            const notes = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
+            const times = [0, 0.08, 0.16, 0.25, 0.36, 0.45];
+            notes.forEach((freq, idx) => {
+              const osc = audioCtx.createOscillator();
+              const gain = audioCtx.createGain();
+              osc.type = 'triangle';
+              osc.frequency.setValueAtTime(freq, now + times[idx]);
+              gain.gain.setValueAtTime(0.001, now + times[idx]);
+              gain.gain.exponentialRampToValueAtTime(0.14, now + times[idx] + 0.02);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + times[idx] + 0.28);
+              osc.connect(gain);
+              gain.connect(audioCtx.destination);
+              osc.start(now + times[idx]);
+              osc.stop(now + times[idx] + 0.3);
+            });
+          } else if (mode === 'neutral') {
+            // Toque neutro para processo devolvido
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(340, now);
+            osc.frequency.exponentialRampToValueAtTime(260, now + 0.1);
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.exponentialRampToValueAtTime(0.08, now + 0.015);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.13);
+          } else {
+            // Pop satisfatório de pontuação
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(580, now);
+            osc.frequency.exponentialRampToValueAtTime(880, now + 0.09);
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.exponentialRampToValueAtTime(0.12, now + 0.015);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.15);
+          }
+        } catch {
+          // Falha silenciosa caso áudio esteja bloqueado
+        }
+      }
+
+      // ======================================================================
+      // 6. CONFETES & MODAL "QUEM FEZ, FEZ!!!"
+      // ======================================================================
+      function launchConfetti() {
+        const canvas = $('confettiCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.classList.remove('hidden');
+
+        const resize = () => {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        };
+        resize();
+
+        const colors = ['#FF6B00', '#FF9447', '#FFD166', '#FFFFFF', '#22C55E', '#38BDF8'];
+        const particles = Array.from({ length: 140 }, () => ({
+          x: canvas.width / 2 + (Math.random() - 0.5) * 160,
+          y: canvas.height / 2 + (Math.random() - 0.5) * 80,
+          vx: (Math.random() - 0.5) * 16,
+          vy: (Math.random() - 0.85) * 18 - 4,
+          size: Math.random() * 8 + 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          vRot: (Math.random() - 0.5) * 12,
+          life: 1
+        }));
+
+        if (confettiAnimId) cancelAnimationFrame(confettiAnimId);
+
+        const tick = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          let alive = 0;
+
+          particles.forEach((p) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.32; // gravidade
+            p.vx *= 0.99;
+            p.rotation += p.vRot;
+            p.life -= 0.008;
+
+            if (p.life > 0 && p.y < canvas.height + 40) {
+              alive++;
+              ctx.save();
+              ctx.globalAlpha = Math.max(0, p.life);
+              ctx.translate(p.x, p.y);
+              ctx.rotate((p.rotation * Math.PI) / 180);
+              ctx.fillStyle = p.color;
+              ctx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size * 0.6);
+              ctx.restore();
+            }
+          });
+
+          if (alive > 0) {
+            confettiAnimId = requestAnimationFrame(tick);
+          } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            canvas.classList.add('hidden');
+          }
+        };
+
+        confettiAnimId = requestAnimationFrame(tick);
+      }
+
+      function showCelebrationModal() {
+        $('celebrationSubtitle').textContent = `Você atingiu a meta de ${dailyGoal} processos conferidos hoje na Retaguarda! Mandou muito bem! 👏🎉`;
+        const modal = $('celebrationModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        launchConfetti();
+        playSound('celebration');
+      }
+
+      function hideCelebrationModal() {
+        const modal = $('celebrationModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+
+      // ======================================================================
+      // 7. FEEDBACK VISUAL (FLOAT XP, POP E TOAST)
+      // ======================================================================
+      function spawnFloatingBadge(text, subtext, buttonEl, isNeutral = false) {
+        const rect = buttonEl.getBoundingClientRect();
+        const el = document.createElement('div');
+        el.className = 'floating-xp tabular';
+        if (isNeutral) {
+          el.style.color = 'var(--text-secondary)';
+          el.style.textShadow = 'none';
+        }
+        el.innerHTML = subtext
+          ? `<div>${text}</div><div style="font-size: 0.72rem; opacity: 0.92;">${subtext}</div>`
+          : text;
+        el.style.left = `${rect.left + rect.width / 2}px`;
+        el.style.top = `${rect.top + 4}px`;
+        document.body.appendChild(el);
+
+        setTimeout(() => el.remove(), 880);
+      }
+
+      function triggerScorePop() {
+        const scoreEl = $('todayScore');
+        scoreEl.classList.remove('animate-pop');
+        void scoreEl.offsetWidth;
+        scoreEl.classList.add('animate-pop');
+      }
+
+      function showToast(message) {
+        const toast = $('toast');
+        $('toastMsg').textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2600);
+      }
+
+      // ======================================================================
+      // 8. TEMA (DARK / LIGHT) E SOM
+      // ======================================================================
+      function applyTheme(theme) {
+        currentTheme = theme;
+        document.documentElement.setAttribute('data-theme', theme);
+        savePreference(THEME_KEY, theme);
+
+        $('themeToggle').innerHTML = theme === 'dark'
+          ? `<svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>`
+          : `<svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+      }
+
+      function updateSoundButton() {
+        $('soundToggle').innerHTML = soundEnabled
+          ? `<svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`
+          : `<svg class="w-5 h-5" style="color: var(--text-muted);" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>`;
+      }
+
+      // ======================================================================
+      // 9. AÇÕES PRINCIPAIS (CONFERIDO / DIGITADO / DEVOLVIDO / DESFAZER)
+      // ======================================================================
+      function addConferido(typeId, buttonEl) {
+        const type = CONFERENCIA_TYPES.find((t) => t.id === typeId);
+        if (!type) return;
+
+        const todayKey = getTodayKey();
+        const prevConferidos = countConferidos(records.filter((r) => r.date === todayKey));
+
+        records.push({
+          id: Date.now() + Math.random(),
+          date: todayKey,
+          type: type.id,
+          name: type.name,
+          other: false,
+          points: type.points,
+          time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+        });
+
+        saveRecords();
+
+        const newConferidos = prevConferidos + 1;
+        const justHitGoal = prevConferidos < dailyGoal && newConferidos >= dailyGoal;
+
+        spawnFloatingBadge(`+${type.points} XP`, '+1 conferido', buttonEl);
+        triggerScorePop();
+
+        if (justHitGoal) {
+          showCelebrationModal();
+        } else {
+          playSound('score');
+        }
+
+        renderAll();
+      }
+
+      function addDigitado(isOtherState, buttonEl) {
+        const service = DIGITADO_SERVICES.find((s) => s.id === selectedServiceId) || DIGITADO_SERVICES[0];
+        const earnedPoints = service.points + (isOtherState ? 1 : 0);
+
+        records.push({
+          id: Date.now() + Math.random(),
+          date: getTodayKey(),
+          type: 'digitado',
+          name: 'Processo Digitado',
+          service: service.id,
+          serviceLabel: service.label,
+          other: isOtherState,
+          points: earnedPoints,
+          time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+        });
+
+        saveRecords();
+        spawnFloatingBadge(`+${earnedPoints} XP`, 'Só XP', buttonEl);
+        triggerScorePop();
+        playSound('score');
+        renderAll();
+      }
+
+      function addDevolvido(buttonEl) {
+        records.push({
+          id: Date.now() + Math.random(),
+          date: getTodayKey(),
+          type: 'devolvido',
+          name: 'Processo Devolvido',
+          other: false,
+          points: 0,
+          time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+        });
+
+        saveRecords();
+        spawnFloatingBadge('Devolvido', '0 XP', buttonEl, true);
+        playSound('neutral');
+        renderAll();
+      }
+
+      function undoLastRecord() {
+        if (!records.length) return;
+        const removed = records.pop();
+        saveRecords();
+        renderAll();
+        const ptsText = removed.points > 0 ? ` (-${removed.points} XP)` : '';
+        showToast(`Desfeito: ${removed.name}${ptsText}`);
+      }
+
+      // ======================================================================
+      // 10. RENDERIZAÇÃO DOS CARDS DE REGISTRO
+      // ======================================================================
+      function renderConferenciaCards() {
+        const grid = $('conferenciaGrid');
+        grid.innerHTML = CONFERENCIA_TYPES.map((t) => `
+          <article class="kp-card kp-process-card p-4 sm:p-5 flex flex-col justify-between gap-4">
+            <div>
+              <div class="flex items-start justify-between gap-2">
+                <div
+                  class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                  style="background: var(--brand-soft); color: var(--brand);"
+                >
+                  ${t.icon}
+                </div>
+                <span
+                  class="px-2.5 py-1 rounded-xl text-xs font-black tabular shrink-0"
+                  style="background: var(--brand-soft); color: var(--brand);"
+                >
+                  ${t.points} XP
+                </span>
+              </div>
+
+              <h3 class="text-sm sm:text-[15px] font-extrabold tracking-tight mt-3 leading-snug">
+                ${t.name}
+              </h3>
+              <p class="text-[11px] sm:text-xs font-medium mt-1 leading-relaxed" style="color: var(--text-secondary);">
+                ${t.desc}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              class="btn-primary w-full py-2.5 px-3 text-xs sm:text-sm font-black tabular flex items-center justify-center gap-1"
+              data-conf-type="${t.id}"
+            >
+              <span>+${t.points} XP</span>
+            </button>
+          </article>
+        `).join('');
+
+        grid.querySelectorAll('button[data-conf-type]').forEach((btn) => {
+          btn.addEventListener('click', (e) => {
+            const target = e.currentTarget;
+            addConferido(target.dataset.confType, target);
+          });
+        });
+      }
+
+      function renderDigitadoServices() {
+        const container = $('digitadoServices');
+        container.innerHTML = DIGITADO_SERVICES.map((s) => {
+          const isActive = s.id === selectedServiceId;
+          return `
+            <button
+              type="button"
+              class="service-chip p-2.5 text-left flex flex-col justify-between gap-1 ${isActive ? 'active' : ''}"
+              data-service-id="${s.id}"
+            >
+              <span class="text-[11px] sm:text-xs font-extrabold leading-tight">${s.label}</span>
+              <span class="text-[10px] font-black tabular opacity-85">${s.points} XP</span>
+            </button>
+          `;
+        }).join('');
+
+        const activeService = DIGITADO_SERVICES.find((s) => s.id === selectedServiceId) || DIGITADO_SERVICES[0];
+        $('btnDigitadoNormalPts').textContent = `+${activeService.points} XP`;
+        $('btnDigitadoOutroPts').textContent = `+${activeService.points + 1} XP`;
+
+        container.querySelectorAll('button[data-service-id]').forEach((btn) => {
+          btn.addEventListener('click', (e) => {
+            selectedServiceId = e.currentTarget.dataset.serviceId;
+            renderDigitadoServices();
+          });
+        });
+      }
+
+      // ======================================================================
+      // 11. RENDERIZAÇÃO GERAL (HERO, RANKING, RESUMO MENSAL E HISTÓRICO)
+      // ======================================================================
+      function renderAll() {
+        const todayKey = getTodayKey();
+        const currentMonthKey = getCurrentMonthKey();
+        const selectedMonthKey = $('monthPicker').value || currentMonthKey;
+
+        $('todayLabel').textContent = new Date().toLocaleDateString('pt-BR', {
+          weekday: 'short',
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        });
+
+        const todayRows = records.filter((r) => r.date === todayKey);
+        const todayXP = sumPoints(todayRows);
+        const todayConf = countConferidos(todayRows);
+        const todayDig = countDigitados(todayRows);
+        const todayDev = countDevolvidos(todayRows);
+
+        const currentMonthRows = records.filter((r) => r.date && r.date.startsWith(currentMonthKey));
+        const currentMonthXP = sumPoints(currentMonthRows);
+
+        // Atualiza Hero
+        $('todayScore').textContent = todayXP;
+        $('todayConferidos').textContent = todayConf;
+        $('todayDigitados').textContent = todayDig;
+        $('todayDevolvidos').textContent = todayDev;
+        $('monthScore').textContent = currentMonthXP;
+        $('currentMonthName').textContent = formatMonthName(currentMonthKey);
+
+        // Atualiza Barra de Meta Diária de Conferidos
+        const goalPct = Math.min(100, Math.round((todayConf / dailyGoal) * 100));
+        const goalMet = todayConf >= dailyGoal;
+
+        $('goalProgressText').textContent = `${todayConf} / ${dailyGoal} processos conferidos hoje`;
+        $('goalBarFill').style.width = `${goalPct}%`;
+
+        const heroCard = $('heroScoreCard');
+        const badge = $('goalStatusBadge');
+        if (goalMet) {
+          heroCard.classList.add('goal-card-achieved');
+          badge.textContent = 'Meta Batida! 🏆';
+          badge.style.background = 'var(--brand-soft)';
+          badge.style.color = 'var(--brand)';
+          badge.style.borderColor = 'var(--brand-border)';
+        } else {
+          heroCard.classList.remove('goal-card-achieved');
+          const faltam = dailyGoal - todayConf;
+          badge.textContent = `Faltam ${faltam} para a meta`;
+          badge.style.background = 'var(--bg-subcard)';
+          badge.style.color = 'var(--text-secondary)';
+          badge.style.borderColor = 'var(--border-subtle)';
+        }
+
+        renderDailyRanking(todayKey);
+        renderMonthlySummary(selectedMonthKey);
+        renderHistory();
+      }
+
+      function renderDailyRanking(todayKey) {
+        const byDay = {};
+        records.forEach((r) => {
+          if (!r.date) return;
+          if (!byDay[r.date]) {
+            byDay[r.date] = { points: 0, conf: 0, dig: 0, dev: 0 };
+          }
+          byDay[r.date].points += Number(r.points) || 0;
+          if (isConferido(r)) byDay[r.date].conf += 1;
+          else if (isDigitado(r)) byDay[r.date].dig += 1;
+          else if (isDevolvido(r)) byDay[r.date].dev += 1;
+        });
+
+        const ranking = Object.entries(byDay).sort(
+          (a, b) => b[1].points - a[1].points || b[1].conf - a[1].conf || b[0].localeCompare(a[0])
+        );
+
+        $('totalDaysBadge').textContent = `${ranking.length} ${ranking.length === 1 ? 'dia' : 'dias'}`;
+
+        if (!ranking.length) {
+          $('dailyRanking').innerHTML = `
+            <div class="kp-subcard p-6 text-center">
+              <p class="text-sm font-bold">Nenhum dia registrado ainda</p>
+              <p class="text-xs mt-1" style="color: var(--text-secondary);">
+                Conferiu o primeiro processo na Retaguarda? Toque em um card acima para inaugurar o ranking!
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        const medals = ['🥇', '🥈', '🥉'];
+
+        $('dailyRanking').innerHTML = `
+          <div class="space-y-1.5">
+            <div class="grid grid-cols-12 px-3 py-1.5 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider" style="color: var(--text-muted);">
+              <div class="col-span-5">Dia</div>
+              <div class="col-span-2 text-center">Conf.</div>
+              <div class="col-span-2 text-center">Dig.</div>
+              <div class="col-span-1 text-center">Dev.</div>
+              <div class="col-span-2 text-right">XP</div>
+            </div>
+            ${ranking.map(([date, stats], index) => {
+              const isToday = date === todayKey;
+              const hitGoal = stats.conf >= dailyGoal;
+              const rankBadge = index < 3
+                ? `<span class="text-base leading-none">${medals[index]}</span>`
+                : `<span class="w-5 text-center text-xs font-extrabold tabular" style="color: var(--text-muted);">${index + 1}º</span>`;
+
+              return `
+                <div
+                  class="grid grid-cols-12 items-center px-3 py-2.5 rounded-xl transition-colors ${isToday ? 'today-row' : ''}"
+                  style="${isToday ? 'border: 1px solid var(--brand-border);' : 'background: var(--bg-subcard); border: 1px solid transparent;'}"
+                >
+                  <div class="col-span-5 flex items-center gap-1.5 min-w-0">
+                    ${rankBadge}
+                    <span class="text-xs sm:text-sm font-bold tabular truncate">${formatDateBR(date)}</span>
+                    ${hitGoal ? '<span title="Meta diária batida">🏆</span>' : ''}
+                    ${isToday ? '<span class="px-1.5 py-0.5 rounded-md text-[9px] font-black uppercase bg-brand text-white shrink-0">Hoje</span>' : ''}
+                  </div>
+                  <div class="col-span-2 text-center text-xs sm:text-sm font-extrabold tabular text-brand">
+                    ${stats.conf}
+                  </div>
+                  <div class="col-span-2 text-center text-xs sm:text-sm font-bold tabular" style="color: var(--text-secondary);">
+                    ${stats.dig}
+                  </div>
+                  <div class="col-span-1 text-center text-xs font-bold tabular" style="color: var(--text-muted);">
+                    ${stats.dev}
+                  </div>
+                  <div class="col-span-2 text-right text-sm sm:text-base font-black tabular text-brand">
+                    ${stats.points}
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+
+      function renderMonthlySummary(monthKey) {
+        const monthRows = records.filter((r) => r.date && r.date.startsWith(monthKey));
+        const totalXP = sumPoints(monthRows);
+        const totalConf = countConferidos(monthRows);
+        const totalDig = countDigitados(monthRows);
+        const totalDev = countDevolvidos(monthRows);
+
+        const daysMap = {};
+        const confCounts = {};
+        const serviceCounts = {};
+
+        monthRows.forEach((r) => {
+          if (!daysMap[r.date]) daysMap[r.date] = { points: 0, conf: 0, dig: 0, dev: 0 };
+          daysMap[r.date].points += Number(r.points) || 0;
+
+          if (isConferido(r)) {
+            daysMap[r.date].conf += 1;
+            const key = r.type || 'normal';
+            confCounts[key] = (confCounts[key] || 0) + 1;
+          } else if (isDigitado(r)) {
+            daysMap[r.date].dig += 1;
+            const sKey = r.serviceLabel || 'Não especificado';
+            serviceCounts[sKey] = (serviceCounts[sKey] || 0) + 1;
+          } else if (isDevolvido(r)) {
+            daysMap[r.date].dev += 1;
+          }
+        });
+
+        const daysWorked = Object.keys(daysMap).length;
+
+        $('selectedMonthScore').textContent = totalXP;
+        $('monthStatDays').textContent = daysWorked;
+        $('monthStatConf').textContent = totalConf;
+        $('monthStatDig').textContent = totalDig;
+        $('monthStatDev').textContent = totalDev;
+
+        if (!monthRows.length) {
+          $('monthDetails').innerHTML = `
+            <div class="kp-subcard p-5 text-center">
+              <p class="text-xs sm:text-sm font-bold">Sem lançamentos neste mês</p>
+              <p class="text-xs mt-1" style="color: var(--text-secondary);">
+                Selecione outro mês ou comece a registrar processos hoje.
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        // Barras de Conferência por Tipo
+        const confItems = CONFERENCIA_TYPES
+          .map((t) => ({ name: t.name, count: confCounts[t.id] || 0 }))
+          .filter((item) => item.count > 0)
+          .sort((a, b) => b.count - a.count);
+
+        const maxConf = Math.max(...confItems.map((i) => i.count), 1);
+        const confBarsHTML = confItems.length
+          ? `
+            <div>
+              <h3 class="text-[11px] font-extrabold uppercase tracking-wider mb-2.5" style="color: var(--text-muted);">
+                Conferidos por Tipo
+              </h3>
+              <div class="space-y-2">
+                ${confItems.map((item) => {
+                  const pct = Math.max(6, Math.round((item.count / maxConf) * 100));
+                  return `
+                    <div>
+                      <div class="flex items-center justify-between text-xs font-bold mb-1">
+                        <span class="truncate pr-2">${item.name}</span>
+                        <span class="tabular text-brand font-extrabold shrink-0">${item.count}</span>
+                      </div>
+                      <div class="w-full h-2 rounded-full overflow-hidden" style="background: var(--bg-subcard);">
+                        <div class="h-full rounded-full bg-brand" style="width: ${pct}%;"></div>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          `
+          : '';
+
+        // Detalhamento de Serviços Digitados
+        const serviceEntries = Object.entries(serviceCounts).sort((a, b) => b[1] - a[1]);
+        const digServicesHTML = serviceEntries.length
+          ? `
+            <div class="pt-1">
+              <h3 class="text-[11px] font-extrabold uppercase tracking-wider mb-2" style="color: var(--text-muted);">
+                Digitados por Serviço
+              </h3>
+              <div class="flex flex-wrap gap-1.5">
+                ${serviceEntries.map(([label, count]) => `
+                  <span class="px-2.5 py-1 rounded-xl text-xs font-bold tabular" style="background: var(--bg-subcard); border: 1px solid var(--border-subtle);">
+                    ${label}: <strong class="text-brand font-black">${count}</strong>
+                  </span>
+                `).join('')}
+              </div>
+            </div>
+          `
+          : '';
+
+        // Lista de dias do mês
+        const daysListHTML = Object.entries(daysMap)
+          .sort((a, b) => b[0].localeCompare(a[0]))
+          .map(([date, stats]) => `
+            <div class="flex items-center justify-between py-2 px-3 rounded-xl text-xs gap-2" style="background: var(--bg-subcard);">
+              <span class="font-bold tabular shrink-0">
+                ${formatDateBR(date)} ${stats.conf >= dailyGoal ? '🏆' : ''}
+              </span>
+              <span class="font-semibold tabular text-right" style="color: var(--text-secondary);">
+                ${stats.conf} conf. &bull; ${stats.dig} dig. &bull; ${stats.dev} dev. &bull; <strong class="text-brand font-black">${stats.points} XP</strong>
+              </span>
+            </div>
+          `)
+          .join('');
+
+        $('monthDetails').innerHTML = `
+          ${confBarsHTML}
+          ${digServicesHTML}
+          <div class="pt-1">
+            <h3 class="text-[11px] font-extrabold uppercase tracking-wider mb-2" style="color: var(--text-muted);">
+              Dias no Mês
+            </h3>
+            <div class="space-y-1.5">${daysListHTML}</div>
+          </div>
+        `;
+      }
+
+      function renderHistory() {
+        const undoBtn = $('undoBtn');
+        undoBtn.disabled = !records.length;
+        undoBtn.style.opacity = records.length ? '1' : '0.45';
+        undoBtn.style.pointerEvents = records.length ? 'auto' : 'none';
+
+        if (!records.length) {
+          $('historyList').innerHTML = `
+            <div class="kp-subcard p-5 text-center">
+              <p class="text-xs sm:text-sm font-bold" style="color: var(--text-secondary);">
+                Nenhum lançamento registrado ainda.
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        const latest = records.slice(-15).reverse();
+
+        $('historyList').innerHTML = `
+          <div class="space-y-2">
+            ${latest.map((r) => {
+              let categoryBadge = '';
+              if (isDevolvido(r)) {
+                categoryBadge = `<span class="px-2 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-wide" style="background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border-subtle);">Devolvido</span>`;
+              } else if (isDigitado(r)) {
+                categoryBadge = `<span class="px-2 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-wide" style="background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-subtle);">Só XP</span>`;
+              } else {
+                categoryBadge = `<span class="px-2 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-wide" style="background: var(--brand-soft); color: var(--brand); border: 1px solid var(--brand-border);">+1 conf.</span>`;
+              }
+
+              const serviceBadge = r.serviceLabel
+                ? `<span class="px-2 py-0.5 rounded-lg text-[10px] font-bold" style="background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-subtle);">${r.serviceLabel}</span>`
+                : '';
+
+              const otherBadge = r.other
+                ? `<span class="px-2 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-wide" style="background: var(--brand-soft); color: var(--brand); border: 1px solid var(--brand-border);">Outro Estado</span>`
+                : '';
+
+              return `
+                <div class="kp-subcard px-3.5 py-3 flex items-center justify-between gap-3">
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="text-xs sm:text-sm font-extrabold truncate">${r.name}</span>
+                      ${categoryBadge}
+                      ${serviceBadge}
+                      ${otherBadge}
+                    </div>
+                    <div class="text-[11px] font-semibold mt-0.5 tabular" style="color: var(--text-muted);">
+                      ${formatDateBR(r.date)} &bull; ${r.time || '--:--'}
+                    </div>
+                  </div>
+                  <span class="text-sm sm:text-base font-black tabular whitespace-nowrap shrink-0 ${r.points > 0 ? 'text-brand' : ''}" style="${r.points === 0 ? 'color: var(--text-muted);' : ''}">
+                    ${r.points > 0 ? `+${r.points} XP` : '0 XP'}
+                  </span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+
+      // ======================================================================
+      // 12. INICIALIZAÇÃO E EVENTOS
+      // ======================================================================
+      function init() {
+        applyTheme(currentTheme);
+        updateSoundButton();
+
+        $('monthPicker').value = getCurrentMonthKey();
+
+        // Alternância de tema e som
+        $('themeToggle').addEventListener('click', () => {
+          applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+
+        $('soundToggle').addEventListener('click', () => {
+          soundEnabled = !soundEnabled;
+          savePreference(SOUND_KEY, soundEnabled ? 'on' : 'off');
+          updateSoundButton();
+          if (soundEnabled) playSound('score');
+          showToast(soundEnabled ? 'Efeitos sonoros ativados' : 'Efeitos sonoros silenciados');
+        });
+
+        // Edição inline da Meta Diária
+        $('editGoalBtn').addEventListener('click', () => {
+          $('goalInput').value = dailyGoal;
+          $('editGoalBtn').classList.add('hidden');
+          $('goalEditBox').classList.remove('hidden');
+          $('goalEditBox').classList.add('flex');
+          $('goalInput').focus();
+          $('goalInput').select();
+        });
+
+        const closeGoalEdit = () => {
+          $('goalEditBox').classList.add('hidden');
+          $('goalEditBox').classList.remove('flex');
+          $('editGoalBtn').classList.remove('hidden');
+        };
+
+        $('saveGoalBtn').addEventListener('click', () => {
+          saveGoal($('goalInput').value);
+          closeGoalEdit();
+          renderAll();
+          showToast(`Meta diária atualizada para ${dailyGoal} processos conferidos.`);
+        });
+
+        $('cancelGoalBtn').addEventListener('click', closeGoalEdit);
+        $('goalInput').addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') $('saveGoalBtn').click();
+          if (e.key === 'Escape') closeGoalEdit();
+        });
+
+        // Botões de Processo Digitado e Devolvido
+        $('btnDigitadoNormal').addEventListener('click', (e) => addDigitado(false, e.currentTarget));
+        $('btnDigitadoOutro').addEventListener('click', (e) => addDigitado(true, e.currentTarget));
+        $('btnDevolvido').addEventListener('click', (e) => addDevolvido(e.currentTarget));
+
+        // Modal Comemorativo
+        $('closeCelebrationBtn').addEventListener('click', hideCelebrationModal);
+        $('celebrationModal').addEventListener('click', (e) => {
+          if (e.target === $('celebrationModal')) hideCelebrationModal();
+        });
+
+        // Mês e Desfazer
+        $('monthPicker').addEventListener('change', renderAll);
+        $('undoBtn').addEventListener('click', undoLastRecord);
+
+        renderConferenciaCards();
+        renderDigitadoServices();
+        renderAll();
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
